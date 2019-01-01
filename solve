@@ -1,0 +1,20 @@
+#!/bin/bash
+g++ -Wall -std=c++11 -O2 $1.cc -o $1.exe
+
+> solutions-$1-$2.txt
+echo "Alex" $1 $2 >> solutions-$1-$2.txt
+echo >> solutions-$1-$2.txt
+
+if [ "$2" = "hard" ]; then
+  k=20
+else
+  k=10
+fi
+
+for i in `seq 1 $k`; do
+  echo $i: >> solutions-$1-$2.txt
+  ./$1.exe public_benchs/$2-$i.txt out.txt
+  ./check public_benchs/$2-$i.txt out.txt
+  cat out.txt >> solutions-$1-$2.txt
+  echo >> solutions-$1-$2.txt
+done
